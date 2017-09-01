@@ -2,12 +2,93 @@
   margin: 0;
   padding: 0;
 }
- body {
-    background-color: aliceblue;
- }
+
+body {
+  background-color: #e6ecff;
+  font-family: sans-serif;
+}
+
+header{
+  align-items: center;
+  background-color: #3366ff;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+h1{
+  font-size: 60px;
+  letter-spacing: 10px;
+  margin-left: 5%;
+  margin-right: 20%;
+}
+
+header a{
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 15px;
+  text-decoration: none;
+}
+
+footer{
+  background-color: #3366ff;
+  height: 30px;
+}
 
 .container {
   display: flex;
   flex-flow: row wrap;
-  margin: 20px auto;
+  margin: 50px auto;
+}
+
+.loginSection{
+
+}
+
+.loginSection h2{
+  padding: 15px;
+}
+
+#loginForm{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+#loginForm input{
+  padding: 8px;
+  margin: 10px 0;
+
+}
+
+#loginForm button{
+  padding: 8px;
+  margin-top: 10px;
+}
+
+.signupSection{
+  border-left: 1px solid black;
+
+}
+
+.signupSection h2{
+  padding: 15px;
+}
+
+#signupForm{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+#signupForm input{
+  padding: 8px;
+  margin: 10px 0;
+  width: 200px;
+}
+
+#signupForm button{
+  padding: 8px;
+  margin-top: 10px;
 }

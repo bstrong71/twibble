@@ -16,7 +16,7 @@ const isAuthenticated = function (req, res, next) {
   }
 
 router.get("/", function(req, res) {
-  res.render("index", {
+  res.render("signin", {
       messages: res.locals.getMessages()
   });
 });
