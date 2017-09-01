@@ -1,0 +1,15 @@
+<div class="userPage">
+  {{#post}}
+    <p>Post: {{post}}</p>
+  {{/post}}
+  {{^post}}
+    <p>There are no twibs.</p>
+  {{/post}}
+</div>
+<hr>
+<div class="createTwib">
+  <form class="twibForm" action="/create" method="post">
+    <textarea name="post" value="" rows="2" cols="80"></textarea>
+    <button type="submit" name="button">Post Twib</button>
+  </form>
+</div>

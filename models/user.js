@@ -8,11 +8,15 @@ module.exports = function(sequelize, DataTypes) {
   }, {});
 
   User.associate = function(models) {
-    User.belongsToMany(models.Twib, {
-      foreignKey: 'userId',
-      otherKey: 'twibId',
-      through: 'likes'
-    });
+
+    User.hasMany(models.Twib, {
+      as: 'Twibs',
+      foreignKey: 'userId'
+    })
+    User.hasMany(models.Like, {
+      foreignKey: 'userId'
+    })
+
   };
 
   return User;
