@@ -7,9 +7,11 @@ module.exports = function(sequelize, DataTypes) {
 
   Twib.associate = function(models) {
     Twib.belongsTo(models.User, {
+      as: 'Users',
       foreignKey: 'userId'
     })
     Twib.hasMany(models.Like, {
+      as: 'Likes',
       foreignKey: 'twibId'
     })
 

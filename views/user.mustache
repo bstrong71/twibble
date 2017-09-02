@@ -1,15 +1,20 @@
-<div class="userPage">
-  {{#post}}
-    <p>Post: {{post}}</p>
-  {{/post}}
-  {{^post}}
-    <p>There are no twibs.</p>
-  {{/post}}
-</div>
-<hr>
-<div class="createTwib">
-  <form class="twibForm" action="/create" method="post">
-    <textarea name="post" value="" rows="2" cols="80"></textarea>
-    <button type="submit" name="button">Post Twib</button>
-  </form>
-</div>
+<main>
+  <div class="createTwib">
+    <form class="twibForm" action="/create" method="post">
+      <textarea name="post" value="" rows="2" cols="80"></textarea>
+      <button type="submit" name="button">Post Twib</button>
+    </form>
+  </div>
+  <hr>
+  <div class="feed">
+    {{#twib}}
+      <p>{{Users.display_name}}: {{post}}</p>
+      <p>{{createdAt}}</p>
+      <p>Likes: {{Likes.length}}</p>
+      <hr>
+    {{/twib}}
+    {{^twib}}
+      <p>There are no twibs.</p>
+    {{/twib}}
+  </div>
+</main>

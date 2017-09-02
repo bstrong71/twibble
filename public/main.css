@@ -31,10 +31,47 @@ header a{
   text-decoration: none;
 }
 
-footer{
+main{
+  margin: 50px auto;
+}
+
+.createTwib{
+  padding: 25px;
+}
+
+.twibForm{
+  display: table-caption;
+}
+
+.twibForm button{
+  font-size: 12px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.twibForm textarea{
+  font-size: 14px;
+  padding: 10px;
+}
+
+.feed{
+  padding: 25px;
+}
+
+.feed hr{
+  border-bottom: 1px solid blue;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.feed p{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/*footer{
   background-color: #3366ff;
   height: 30px;
-}
+}*/
 
 .container {
   display: flex;

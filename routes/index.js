@@ -34,8 +34,6 @@ router.post("/signup", function(req, res) {
   let display_name = req.body.display_name;
   let username = req.body.username;
   let password = req.body.password;
-  console.log("GOT THE DATA FROM FORM!!!!!!!!");
-  console.log(req.body.display_name, req.body.username, req.body.password);
 
   if (!username || !password) {
     req.flash('error', "Please, fill in all the fields.")
@@ -43,7 +41,6 @@ router.post("/signup", function(req, res) {
   }
   let salt = bcrypt.genSaltSync(10)
   let hashedPassword = bcrypt.hashSync(password, salt)
-  console.log("CREATED HASHES..........");
   let newUser = {
     display_name: display_name,
     username: username,
@@ -51,28 +48,28 @@ router.post("/signup", function(req, res) {
     password: hashedPassword
   }
 
-  console.log("ALL VARIABLES SET.........");
   models.User.create(newUser).then(function() {
-    console.log("CREATING USER.........");
     res.redirect('/');
   }).catch(function(error) {
-    console.log("THERE WAS AN ERROR CREATING!!!!!", error);
     req.flash('error', "Please, choose a different username.")
     res.redirect('/signup')
   });
 });
 
 router.get("/user", isAuthenticated, function(req, res) {
-  console.log("GOING TO /USER.....");
   models.Twib.findAll({
-    // order: ['createdAt', 'DESC']
+    order: [['createdAt', 'DESC']],
+    include: [
+      {model: models.User, as: 'Users'},
+      {model: models.Like, as: 'Likes'}
+    ]
   })
   .then(function(data) {
-    console.log("RENDERING TWIB DATA ", data);
+    console.log("THIS IS DATA ", data);
     res.render("user", {twib: data});
   })
   .catch(function(err) {
-    console.log("COULDN'T RENDER USER ", err);
+    console.log("FAILED ", err);
   })
 });
 
@@ -82,12 +79,9 @@ router.post("/create", function(req, res) {
     userId: req.user.id
   })
   .then(function(data) {
-    console.log("THIS IS /CREATE .THEN");
     res.redirect("/user");
   })
   .catch(function(err) {
-    console.log("THIS IS /CREATE .CATCH");
-    console.log(err);
     res.redirect("/");
   });
 });

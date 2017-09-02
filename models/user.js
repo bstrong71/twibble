@@ -14,6 +14,7 @@ module.exports = function(sequelize, DataTypes) {
       foreignKey: 'userId'
     })
     User.hasMany(models.Like, {
+      as: 'Likes',
       foreignKey: 'userId'
     })
 
