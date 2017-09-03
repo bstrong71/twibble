@@ -1,9 +1,9 @@
-* {
+*{
   margin: 0;
   padding: 0;
 }
 
-body {
+body{
   background-color: #e6ecff;
   font-family: sans-serif;
 }
@@ -17,10 +17,14 @@ header{
 }
 
 h1{
+  color: black;
   font-size: 60px;
   letter-spacing: 10px;
-  margin-left: 5%;
-  margin-right: 20%;
+  margin: 5px auto;
+}
+
+nav{
+  margin: 5px auto;
 }
 
 header a{
@@ -31,8 +35,16 @@ header a{
   text-decoration: none;
 }
 
+.container{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 30px auto;
+}
+
 main{
-  margin: 50px auto;
+  margin: 30px auto;
+  width: 45%;
 }
 
 .createTwib{
@@ -54,33 +66,18 @@ main{
   padding: 10px;
 }
 
-.feed{
-  padding: 25px;
-}
-
-.feed hr{
+.each{
   border-bottom: 1px solid blue;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 15px;
 }
 
-.feed p{
+.each p{
   margin-top: 10px;
   margin-bottom: 10px;
-}
-/*footer{
-  background-color: #3366ff;
-  height: 30px;
-}*/
-
-.container {
-  display: flex;
-  flex-flow: row wrap;
-  margin: 50px auto;
 }
 
 .loginSection{
-
+  margin-right: 20px;
 }
 
 .loginSection h2{
@@ -106,7 +103,7 @@ main{
 
 .signupSection{
   border-left: 1px solid black;
-
+  padding-left: 20px;
 }
 
 .signupSection h2{
@@ -128,4 +125,30 @@ main{
 #signupForm button{
   padding: 8px;
   margin-top: 10px;
+}
+
+.viewTwib{
+  margin-top: 40px;
+  width: 45%;
+}
+
+.viewTwib h4, h3, p{
+  padding-bottom: 20px;
+}
+
+.viewTwib h4{
+  text-decoration: underline;
+}
+
+.problem{
+  margin-top: 100px;
+}
+
+.problem h2{
+  font-size: 36px;
+  padding: 20px 0;
+}
+
+.problem p{
+  padding: 20px 0 40px 0;
 }

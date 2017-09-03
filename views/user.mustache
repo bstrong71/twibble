@@ -1,17 +1,27 @@
 <main>
   <div class="createTwib">
     <form class="twibForm" action="/create" method="post">
-      <textarea name="post" value="" rows="2" cols="80"></textarea>
+      <textarea name="post" value="" rows="2" cols="80" placeholder="140 characters max"></textarea>
       <button type="submit" name="button">Post Twib</button>
     </form>
+    {{#errors}}
+      <p>{{msg}}</p>
+    {{/errors}}
   </div>
   <hr>
   <div class="feed">
     {{#twib}}
+    <article class="each">
       <p>{{Users.display_name}}: {{post}}</p>
       <p>{{createdAt}}</p>
       <p>Likes: {{Likes.length}}</p>
-      <hr>
+      <br>
+      <p>
+        <a href="/delete/{{id}}">Delete</a>
+        <a href="/like/{{id}}">Like</a>
+        <a href="/view/{{_id}}">View</a>
+      </p>
+    </article>
     {{/twib}}
     {{^twib}}
       <p>There are no twibs.</p>

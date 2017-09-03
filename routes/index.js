@@ -14,6 +14,22 @@ const isAuthenticated = function (req, res, next) {
     res.redirect('/')
   }
 
+//*********DELETE THIS WHEN DONE*************//
+
+router.get("/problem", function(req, res) {
+  res.render("problem", {error: "this is an error message"});
+});
+
+//*******************************************//
+//*********DELETE THIS WHEN DONE*************//
+
+router.get("/view", function(req, res) {
+  res.render("view");
+});
+
+//*******************************************//
+
+
 router.get("/", function(req, res) {
   res.render("signin", {
       messages: res.locals.getMessages()
@@ -65,25 +81,68 @@ router.get("/user", isAuthenticated, function(req, res) {
     ]
   })
   .then(function(data) {
-    console.log("THIS IS DATA ", data);
     res.render("user", {twib: data});
   })
   .catch(function(err) {
-    console.log("FAILED ", err);
   })
 });
 
+// TODO create error validation for over 140 //
 router.post("/create", function(req, res) {
+  // console.log("POST LENGTH ", req.body.post.length);
   models.Twib.create({
     post: req.body.post,
     userId: req.user.id
   })
   .then(function(data) {
+    // console.log("******PASSPORT.USER: ", req.session.passport.user);
+    // console.log("******TWIB INFO: ", models.Twib);
     res.redirect("/user");
   })
   .catch(function(err) {
+    // console.log("ERROR IN POST :", err);
     res.redirect("/");
   });
+});
+
+// router.get("/view/:id", function(req, res) {
+//
+// })
+
+// router.get("/like/:likeid", function(req, res) {
+//   models.Like.create({
+//     twibId: req.twib.id,
+//     userId: req.user.id
+//   })
+//   .then(function(data) {
+//     res.redirect("/user");
+//   })
+//   .catch(function(err) {
+//     console.log("*****LIKE ERROR***** ", err);
+//     res.redirect("/");
+//   })
+// });
+
+//TODO fix ability to delete any//
+router.get("/delete/:id", function(req, res) {
+  // console.log("SESSION INFO ", req.session.passport.user);
+  if(req.session.passport.user === req.user.id) {
+    models.Twib.destroy({
+      where: { //only retrieves if it exists//
+        id: req.params.id
+      }
+    })
+      .then(function(data) {
+        res.redirect("/user");
+      })
+  } else {
+    res.render("problem");
+  }
+
+
+    // .catch(function(err) {
+    //   res.redirect("/");
+    // });
 });
 
 router.get("/logout", function(req, res) {
