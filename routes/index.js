@@ -14,21 +14,6 @@ const isAuthenticated = function (req, res, next) {
     res.redirect('/')
   }
 
-//*********DELETE THIS WHEN DONE*************//
-
-router.get("/problem", function(req, res) {
-  res.render("problem", {error: "this is an error message"});
-});
-
-//*******************************************//
-//*********DELETE THIS WHEN DONE*************//
-
-router.get("/view", function(req, res) {
-  res.render("view");
-});
-
-//*******************************************//
-
 
 router.get("/", function(req, res) {
   res.render("signin", {
