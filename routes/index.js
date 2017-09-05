@@ -69,9 +69,11 @@ router.get("/user", isAuthenticated, function(req, res) {
     res.render("user", {twib: data});
   })
   .catch(function(err) {
+    res.render("problem", {error: err});
   })
 });
 
+//****Write a new twib****//
 // TODO create error validation for over 140 //
 router.post("/create", function(req, res) {
   // console.log("POST LENGTH ", req.body.post.length);
@@ -86,48 +88,76 @@ router.post("/create", function(req, res) {
   })
   .catch(function(err) {
     // console.log("ERROR IN POST :", err);
-    res.redirect("/");
+    res.render("problem", {error: err});
   });
 });
 
-// router.get("/view/:id", function(req, res) {
-//
-// })
-
-// router.get("/like/:likeid", function(req, res) {
-//   models.Like.create({
-//     twibId: req.twib.id,
-//     userId: req.user.id
-//   })
-//   .then(function(data) {
-//     res.redirect("/user");
-//   })
-//   .catch(function(err) {
-//     console.log("*****LIKE ERROR***** ", err);
-//     res.redirect("/");
-//   })
-// });
-
-//TODO fix ability to delete any//
-router.get("/delete/:id", function(req, res) {
-  // console.log("SESSION INFO ", req.session.passport.user);
-  if(req.session.passport.user === req.user.id) {
-    models.Twib.destroy({
-      where: { //only retrieves if it exists//
-        id: req.params.id
-      }
+//****Like a twib****//
+router.get("/like/:id", function(req, res) {
+  models.Twib.findOne({
+    where: {id: req.params.id},
+    include: [
+      {model: models.Like, as: 'Likes'},
+    ]
+  })
+  .then(function(twib) {
+    models.Like.create({
+      userId: req.user.id,
+      twibId: twib.id
     })
+    .then(function(data) {
+      res.redirect("/user");
+    })
+    .catch(function(err) {
+      res.render("problem", {error: err})
+    })
+  })
+  .catch(function(err) {
+    res.render("problem", {error: err})
+  })
+});
+
+//****View twib info and likes****//
+//TODO need to display names of likers//
+router.get("/view/:id", function(req, res) {
+  models.Twib.findOne({
+    where: {id: req.params.id},
+    include: [
+      {model: models.User, as: 'Users'},
+      {model: models.Like, as: 'Likes'}
+    ]
+  })
+  .then(function(data) {
+    console.log("************ data.Likes.username: ", data.Likes.username);
+
+    res.render("view", {twib: data})
+  })
+  .catch(function(err) {
+    res.render("problem", {error: err});
+  })
+});
+
+
+//****User can delete own twibs****//
+router.get("/delete/:id", function(req, res) {
+  models.Twib.findOne(
+    {where: {id: req.params.id}}
+  )
+  .then(function(twib) {
+    if(twib.userId === req.user.id) {
+      models.Twib.destroy(
+        {where: {id: req.params.id}}
+      )
       .then(function(data) {
         res.redirect("/user");
       })
-  } else {
-    res.render("problem");
-  }
-
-
-    // .catch(function(err) {
-    //   res.redirect("/");
-    // });
+    } else {
+      res.render("problem", {error: "You can't delete this message."})
+    }
+  })
+  .catch(function(err) {
+    res.render("problem", {error: err});
+  })
 });
 
 router.get("/logout", function(req, res) {

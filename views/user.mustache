@@ -1,4 +1,7 @@
 <main>
+  {{#user}}
+  <h3>User logged in: {{username}}</h3>
+  {{/user}}
   <div class="createTwib">
     <form class="twibForm" action="/create" method="post">
       <textarea name="post" value="" rows="2" cols="80" placeholder="140 characters max"></textarea>
@@ -9,6 +12,9 @@
     {{/errors}}
   </div>
   <hr>
+  <div class="">
+    <h3>{{error}}</h3>
+  </div>
   <div class="feed">
     {{#twib}}
     <article class="each">
@@ -19,7 +25,7 @@
       <p>
         <a href="/delete/{{id}}">Delete</a>
         <a href="/like/{{id}}">Like</a>
-        <a href="/view/{{_id}}">View</a>
+        <a href="/view/{{id}}">View</a>
       </p>
     </article>
     {{/twib}}

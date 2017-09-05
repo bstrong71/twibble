@@ -1,15 +1,17 @@
 <div class="viewTwib">
-  <h3>Temporary Name{{Users.display_name}}:</h3>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.{{post}}</p>
-  <p>fake time stamp{{createdAt}}</p>
+{{#twib}}
+  <h3>{{Users.display_name}}:</h3>
+  <p>{{post}}</p>
+  <p>{{createdAt}}</p>
   <p>Likes: {{Likes.length}}</p>
   <h4>Here's who liked the twib:</h4>
   <ul>
     {{#Likes}}
-      <li>user who liked</li>
+      <li>{{userId}}</li>
     {{/Likes}}
     {{^Likes}}
       <p>No one liked this twib yet.</p>
     {{/Likes}}
   </ul>
+{{/twib}}
 </div>
