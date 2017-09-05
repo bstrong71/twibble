@@ -128,7 +128,15 @@ router.get("/view/:id", function(req, res) {
     ]
   })
   .then(function(data) {
-    console.log("************ data.Likes.username: ", data.Likes.username);
+    //
+    // let arr = []
+    //
+    // data.Likes.forEach(function(user) {
+    //   arr.push(userId)
+    // })
+    //
+    // models.User.findAll({ where: { id: arr } })
+
 
     res.render("view", {twib: data})
   })
