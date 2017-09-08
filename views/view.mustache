@@ -6,12 +6,9 @@
   <p>Likes: {{Likes.length}}</p>
   <h4>Here's who liked the twib:</h4>
   <ul>
-    {{#Likes}}
-      <li>{{userId}}</li>
-    {{/Likes}}
-    {{^Likes}}
-      <p>No one liked this twib yet.</p>
-    {{/Likes}}
+      {{#likers}}
+      <li>{{display_name}}</li>
+      {{/likers}}
   </ul>
 {{/twib}}
 </div>

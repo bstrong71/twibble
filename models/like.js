@@ -7,10 +7,12 @@ module.exports = function(sequelize, DataTypes) {
 
   Like.associate = function(models) {
     Like.belongsTo(models.User, {
+      as: 'Users',
       foreignKey: 'userId'
     })
 
     Like.belongsTo(models.Twib, {
+      as: 'Twibs',
       foreignKey: 'twibId'
     })
   };

@@ -13,12 +13,10 @@ const isAuthenticated = function (req, res, next) {
     req.flash('error', 'You have to be logged in to access the page.')
     res.redirect('/')
   }
-
-
-router.get("/", function(req, res) {
-  res.render("signin", {
-      messages: res.locals.getMessages()
-  });
+  router.get("/", function(req, res) {
+    res.render("signin", {
+        messages: res.locals.getMessages()
+    });
 });
 
 router.post('/login', passport.authenticate('local', {
@@ -74,20 +72,15 @@ router.get("/user", isAuthenticated, function(req, res) {
 });
 
 //****Write a new twib****//
-// TODO create error validation for over 140 //
 router.post("/create", function(req, res) {
-  // console.log("POST LENGTH ", req.body.post.length);
   models.Twib.create({
     post: req.body.post,
     userId: req.user.id
   })
   .then(function(data) {
-    // console.log("******PASSPORT.USER: ", req.session.passport.user);
-    // console.log("******TWIB INFO: ", models.Twib);
     res.redirect("/user");
   })
   .catch(function(err) {
-    // console.log("ERROR IN POST :", err);
     res.render("problem", {error: err});
   });
 });
@@ -123,22 +116,32 @@ router.get("/view/:id", function(req, res) {
   models.Twib.findOne({
     where: {id: req.params.id},
     include: [
-      {model: models.User, as: 'Users'},
+      {model: models.User, as: "Users"},
       {model: models.Like, as: 'Likes'}
     ]
   })
-  .then(function(data) {
-    //
-    // let arr = []
-    //
-    // data.Likes.forEach(function(user) {
-    //   arr.push(userId)
-    // })
-    //
-    // models.User.findAll({ where: { id: arr } })
-
-
-    res.render("view", {twib: data})
+  .then(function(post) {
+    models.Like.findAll({
+      where: {twibId: req.params.id},
+      include: [
+        {model: models.User, as: "Users"}
+      ]
+    })
+    .then(function(data) {
+      let array = [];
+      data.forEach(function(user){
+        array.push(user.userId)
+      })
+      models.User.findAll({
+        where: {id: array}
+      })
+      .then(function(likers) {
+            res.render("view", {twib: post, likers: likers})
+      })
+    })
+    .catch(function(err) {
+      res.render("problem", {error: err});
+    })
   })
   .catch(function(err) {
     res.render("problem", {error: err});
@@ -148,20 +151,28 @@ router.get("/view/:id", function(req, res) {
 
 //****User can delete own twibs****//
 router.get("/delete/:id", function(req, res) {
-  models.Twib.findOne(
-    {where: {id: req.params.id}}
-  )
-  .then(function(twib) {
-    if(twib.userId === req.user.id) {
-      models.Twib.destroy(
-        {where: {id: req.params.id}}
-      )
-      .then(function(data) {
-        res.redirect("/user");
-      })
-    } else {
-      res.render("problem", {error: "You can't delete this message."})
-    }
+  models.Like.destroy({
+    where: {twibId: req.params.id}
+  })
+  .then(function(data){
+    models.Twib.findOne(
+      {where: {id: req.params.id}}
+    )
+    .then(function(twib) {
+      if(twib.userId === req.user.id) {
+        models.Twib.destroy(
+          {where: {id: req.params.id}}
+        )
+        .then(function(data) {
+          res.redirect("/user");
+        })
+      } else {
+        res.render("problem", {error: "You can't delete this message."})
+      }
+    })
+    .catch(function(err) {
+      res.render("problem", {error: err});
+    })
   })
   .catch(function(err) {
     res.render("problem", {error: err});
