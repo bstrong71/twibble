@@ -91,11 +91,7 @@ app.use(function (req, res, next) {
 
 app.use(routes);
 
-if (require.main === module) {
-  app.listen(app.get('port'), function() {
-    console.log('App is running on ', app.get('port'))
-  })
-}
-// app.listen(3000, function() {
-//   console.log("App is running on localhost:3000");
-// });
+
+app.listen(app.get('port'), function() {
+  console.log('App is running on ', app.get('port'))
+})
