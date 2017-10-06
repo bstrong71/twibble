@@ -13,6 +13,9 @@ const bcrypt = require("bcrypt");
 const cookieParser = require('cookie-parser')
 const app = express();
 
+// added next line for hosting out in production
+app.set('port', (process.env.PORT || 3000));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.engine("mustache", mustacheExpress());
@@ -88,6 +91,11 @@ app.use(function (req, res, next) {
 
 app.use(routes);
 
-app.listen(3000, function() {
-  console.log("App is running on localhost:3000");
-});
+if (require.main === module) {
+  app.listen(app.get('port'), function() {
+    console.log('App is running on ', app.get('port'))
+  })
+}
+// app.listen(3000, function() {
+//   console.log("App is running on localhost:3000");
+// });

@@ -9,14 +9,15 @@
   "test": {
     "username": "berniestrong",
     "password": null,
-    "database": "database_test",
+    "database": "twibble",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "berniestrong",
     "password": null,
-    "database": "database_production",
+    "use_env_variable": "DATABASE_URL",
+    "database": "DATABASE_URL",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
